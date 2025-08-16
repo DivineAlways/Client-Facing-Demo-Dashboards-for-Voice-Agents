@@ -1,0 +1,1178 @@
+```html
+<!--
+    File: index.html
+    Summary: This is the entry point for the Voice Agent Demo prototype. It contains the shared header navigation that allows users to switch between the Hotel Voice Agent Dashboard and the Pizza Delivery Voice Agent Dashboard. This page primarily serves as a landing or introductory page before navigating to one of the specific dashboards.
+
+    DevOps/UI Team Notes:
+    - This file should be the default served page (e.g., '/' route).
+    - The navigation bar is shared across all dashboard pages for consistency. Consider using a templating engine or server-side includes in a production environment to avoid duplication.
+    - Ensure styling defined here is consistent with the other dashboard pages.
+    - No complex functionality on this page, primarily navigation.
+
+    Functionality Requirements:
+    - Persistent navigation to 'Hotel Dashboard' (hotel.html) and 'Pizza Delivery Dashboard' (pizza.html).
+    - Main project title "Voice Agent Demo" displayed prominently.
+    - Fully responsive layout for various screen sizes.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Agent Demo - Home</title>
+    <style>
+        :root {
+            --primary-bg: #f4f7f6;
+            --secondary-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --text-color: #333;
+            --header-bg: #2c3e50; /* Deep Blue/Charcoal */
+            --header-text: #ffffff;
+            --accent-blue: #3498db;
+            --accent-green: #2ecc71;
+            --accent-orange: #f39c12;
+            --font-family: 'Arial', sans-serif;
+            --card-padding: 20px;
+            --card-margin: 15px;
+            --border-radius: 8px;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            flex-grow: 1;
+        }
+
+        nav {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-left: 20px; /* Space between title and nav */
+        }
+
+        nav a {
+            color: var(--header-text);
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            flex-grow: 1;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: var(--secondary-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .container h2 {
+            color: var(--header-bg);
+            margin-bottom: 20px;
+        }
+
+        .intro-text {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .cta-buttons a {
+            display: inline-block;
+            background-color: var(--accent-blue);
+            color: white;
+            padding: 15px 30px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-buttons a:hover {
+            background-color: #2980b9;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                margin-top: 15px;
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+            }
+
+            nav a {
+                flex-grow: 1;
+                text-align: center;
+            }
+
+            .container {
+                padding: 15px;
+                margin: 15px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Voice Agent Demo</h1>
+        <nav>
+            <a href="hotel.html">Hotel Dashboard</a>
+            <a href="pizza.html">Pizza Delivery Dashboard</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Welcome to the Voice Agent Demo</h2>
+        <p class="intro-text">
+            Explore how our advanced conversational AI voice agents can transform customer interactions and provide actionable business intelligence for your operations. Select a dashboard below to see the live demo.
+        </p>
+        <div class="cta-buttons">
+            <a href="hotel.html">View Hotel Dashboard</a>
+            <a href="pizza.html">View Pizza Delivery Dashboard</a>
+        </div>
+    </main>
+
+    <script>
+        // Simple script to highlight the active navigation link based on the current page URL.
+        // This is primarily for future development as this index.html isn't a dashboard itself.
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('nav a');
+            const currentPath = window.location.pathname.split('/').pop();
+
+            navLinks.forEach(link => {
+                const linkPath = link.getAttribute('href');
+                if (currentPath === '' && linkPath === 'hotel.html') { // Default to hotel if on index
+                    link.classList.add('active');
+                } else if (linkPath === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+```
+
+```html
+<!--
+    File: hotel.html
+    Summary: This page displays the Hotel Voice Agent Dashboard. It showcases key performance metrics (KPIs) relevant to hotel operations, customer satisfaction, common inquiries, and top-performing agent interactions. It's designed to function as a live demo, providing a data-driven overview of the voice agent's capabilities and business value.
+
+    DevOps/UI Team Notes:
+    - Data for KPI cards, charts, and tables should be sourced from ElevenLabs conversation AI endpoints and potentially integrated with a CRM or booking system.
+    - "Live" indicator should reflect real-time data updates in a production environment.
+    - Chart visualizations (e.g., bar charts) will require a charting library (e.g., Chart.js, D3.js) or a custom SVG/Canvas implementation for a full build. Placeholders are used here.
+    - CRM functionality (e.g., filtering/searching conversations) would be a future enhancement.
+
+    Functionality Requirements:
+    - Display current Booking Conversion Rate, Average Call Duration, and Customer Satisfaction Score.
+    - Visualize commonly asked questions with their resolution rates (simulated bar chart).
+    - List top-performing voice agent conversations, potentially showing metrics like successful upsells.
+    - Responsive layout adapting to desktop, tablet, and mobile screens.
+    - Navigation bar to switch to other dashboards.
+    - Date range filter placeholder.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Agent Demo - Hotel Dashboard</title>
+    <style>
+        :root {
+            --primary-bg: #f4f7f6;
+            --secondary-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --text-color: #333;
+            --header-bg: #2c3e50; /* Deep Blue/Charcoal */
+            --header-text: #ffffff;
+            --accent-blue: #3498db; /* For informational charts */
+            --accent-green: #2ecc71; /* For positive metrics/success */
+            --accent-orange: #f39c12; /* For highlighting key data */
+            --font-family: 'Arial', sans-serif;
+            --card-padding: 20px;
+            --card-margin: 15px;
+            --border-radius: 8px;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            flex-grow: 1;
+        }
+
+        nav {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-left: 20px;
+        }
+
+        nav a {
+            color: var(--header-text);
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .dashboard-container {
+            flex-grow: 1;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--card-margin);
+        }
+
+        .card {
+            background-color: var(--secondary-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: var(--card-padding);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--header-bg);
+            font-size: 1.2em;
+        }
+
+        .kpi-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--accent-blue);
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .kpi-trend {
+            font-size: 0.8em;
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            color: var(--accent-green);
+        }
+        .kpi-trend.down {
+            color: #e74c3c; /* Red for negative trend */
+        }
+
+        .chart-placeholder {
+            background-color: #f0f0f0;
+            height: 200px;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-style: italic;
+            font-size: 0.9em;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-placeholder.bar-chart {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 10px;
+            gap: 5px;
+            align-items: flex-start;
+        }
+
+        .bar {
+            background-color: var(--accent-blue);
+            width: 80%; /* Fixed width for wireframe */
+            height: N/A; /* To be set dynamically for bar height */
+            border-radius: 4px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 5px;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease;
+        }
+        .bar:hover {
+            background-color: #2980b9;
+        }
+
+        .bar-label {
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 0.7em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: calc(100% - 40px); /* Adjust based on value width */
+        }
+        .bar-value {
+            color: white;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
+        .list-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .list-section li {
+            background-color: #fdfdfd;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            margin-bottom: 8px;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .list-section li:hover {
+            background-color: #f0f0f0;
+        }
+
+        .list-item-detail {
+            font-weight: bold;
+            color: var(--accent-blue);
+        }
+
+        .full-width {
+            grid-column: 1 / -1; /* Spans across all columns */
+        }
+
+        .live-indicator {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent-green);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .live-indicator::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite ease-out;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        .filter-section {
+            grid-column: 1 / -1;
+            padding: var(--card-padding);
+            background-color: var(--secondary-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: var(--card-margin); /* Adjusted for layout */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: flex-start; /* Align to start for responsiveness */
+        }
+
+        .filter-section label {
+            font-weight: bold;
+            margin-right: 5px;
+            white-space: nowrap;
+        }
+
+        .filter-section input[type="date"],
+        .filter-section select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 0.9em;
+            flex-grow: 1; /* Allow input to grow */
+            max-width: 200px; /* Max width for date inputs */
+        }
+
+        .filter-section button {
+            background-color: var(--accent-blue);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-section button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .dashboard-container {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                margin-top: 15px;
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+            }
+
+            nav a {
+                flex-grow: 1;
+                text-align: center;
+            }
+
+            .dashboard-container {
+                padding: 15px;
+                margin: 15px;
+                grid-template-columns: 1fr; /* Stack all cards on small screens */
+            }
+
+            .filter-section {
+                justify-content: center; /* Center filter elements on small screens */
+            }
+
+            .filter-section input[type="date"],
+            .filter-section select {
+                max-width: none; /* Allow full width */
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Voice Agent Demo</h1>
+        <nav>
+            <a href="hotel.html" class="active">Hotel Dashboard</a>
+            <a href="pizza.html">Pizza Delivery Dashboard</a>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+        <div class="live-indicator">Live</div>
+
+        <div class="filter-section">
+            <label for="date-range">Date Range:</label>
+            <input type="date" id="start-date" value="2023-01-01">
+            <span>to</span>
+            <input type="date" id="end-date" value="2023-01-31">
+            <button>Apply Filter</button>
+        </div>
+
+        <div class="card kpi-card">
+            <h3>Booking Conversion Rate</h3>
+            <div class="kpi-value">
+                72.5% <span class="kpi-trend">▲ 5%</span>
+            </div>
+            <p>From voice agent interactions</p>
+        </div>
+
+        <div class="card kpi-card">
+            <h3>Average Call Duration</h3>
+            <div class="kpi-value">
+                3:15 <span class="kpi-trend">▼ 10s</span>
+            </div>
+            <p>Minutes:Seconds</p>
+        </div>
+
+        <div class="card kpi-card">
+            <h3>Customer Satisfaction</h3>
+            <div class="kpi-value">
+                4.7 <span class="kpi-trend">▲ 0.1</span>
+            </div>
+            <p>Out of 5 stars (N=1200)</p>
+        </div>
+
+        <div class="card full-width">
+            <h3>Commonly Asked Questions & Resolution Rates</h3>
+            <div class="chart-placeholder bar-chart">
+                <div class="bar" style="height: 80%; width: 95%; background-color: var(--accent-blue);">
+                    <span class="bar-label">Check-in Times</span><span class="bar-value">95%</span>
+                </div>
+                <div class="bar" style="height: 70%; width: 90%; background-color: var(--accent-blue);">
+                    <span class="bar-label">Amenities Info</span><span class="bar-value">92%</span>
+                </div>
+                <div class="bar" style="height: 60%; width: 85%; background-color: var(--accent-blue);">
+                    <span class="bar-label">Local Recommendations</span><span class="bar-value">88%</span>
+                </div>
+                <div class="bar" style="height: 50%; width: 80%; background-color: var(--accent-blue);">
+                    <span class="bar-label">Cancellation Policy</span><span class="bar-value">85%</span>
+                </div>
+                <div class="bar" style="height: 40%; width: 75%; background-color: var(--accent-blue);">
+                    <span class="bar-label">Room Availability</span><span class="bar-value">78%</span>
+                </div>
+            </div>
+            <p style="font-size: 0.8em; text-align: right; margin-top: 10px;">*Hover for precise data in full build</p>
+        </div>
+
+        <div class="card full-width list-section">
+            <h3>Top Performing Voice Agent Conversations (CRM Preview)</h3>
+            <ul>
+                <li>
+                    <span>Booking #12345 - Upsell to Suite</span>
+                    <span class="list-item-detail">$250 added value</span>
+                </li>
+                <li>
+                    <span>Guest Inquiry - Late Checkout Approved</span>
+                    <span class="list-item-detail">High Satisfaction</span>
+                </li>
+                <li>
+                    <span>Complaint Resolution - Room Service Issue</span>
+                    <span class="list-item-detail">Resolved in 1:20</span>
+                </li>
+                <li>
+                    <span>New Booking - Family Vacation Package</span>
+                    <span class="list-item-detail">Conversion Success</span>
+                </li>
+                <li>
+                    <span>Local Attraction Guide - Restaurant Recs</span>
+                    <span class="list-item-detail">High Engagement</span>
+                </li>
+            </ul>
+            <p style="font-size: 0.8em; margin-top: 10px;">*Click items for full conversation details in a full build</p>
+        </div>
+
+    </main>
+
+    <script>
+        // Set active navigation link
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === 'hotel.html') {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+```
+
+```html
+<!--
+    File: pizza.html
+    Summary: This page displays the Pizza Delivery Voice Agent Dashboard. It features key performance indicators (KPIs) specific to food and beverage operations, such as order success rates, average order value, and popular menu items. It provides a live demo of the voice agent's effectiveness in handling orders and common customer inquiries, offering valuable business intelligence.
+
+    DevOps/UI Team Notes:
+    - Data for KPI cards, charts, and tables should be sourced from ElevenLabs conversation AI endpoints and integrated with order management systems.
+    - "Live" indicator should reflect real-time data updates in a production environment.
+    - Chart visualizations (e.g., pie charts) will require a charting library (e.g., Chart.js, D3.js) or a custom SVG/Canvas implementation for a full build. Placeholders are used here.
+    - Table sorting and search functionality would be a future enhancement.
+
+    Functionality Requirements:
+    - Display current Order Placement Success Rate, Average Order Value, and Peak Ordering Times.
+    - Visualize most popular menu items ordered through the agent (simulated pie chart).
+    - List common customer inquiries with their frequencies or resolution status.
+    - Responsive layout adapting to desktop, tablet, and mobile screens.
+    - Navigation bar to switch to other dashboards.
+    - Date range filter placeholder.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Agent Demo - Pizza Dashboard</title>
+    <style>
+        :root {
+            --primary-bg: #f4f7f6;
+            --secondary-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --text-color: #333;
+            --header-bg: #2c3e50; /* Deep Blue/Charcoal */
+            --header-text: #ffffff;
+            --accent-blue: #3498db;
+            --accent-green: #2ecc71; /* For positive metrics/success */
+            --accent-orange: #f39c12; /* For highlighting key data */
+            --font-family: 'Arial', sans-serif;
+            --card-padding: 20px;
+            --card-margin: 15px;
+            --border-radius: 8px;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            flex-grow: 1;
+        }
+
+        nav {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-left: 20px;
+        }
+
+        nav a {
+            color: var(--header-text);
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .dashboard-container {
+            flex-grow: 1;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--card-margin);
+        }
+
+        .card {
+            background-color: var(--secondary-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: var(--card-padding);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--header-bg);
+            font-size: 1.2em;
+        }
+
+        .kpi-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--accent-green);
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .kpi-trend {
+            font-size: 0.8em;
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            color: var(--accent-green);
+        }
+        .kpi-trend.down {
+            color: #e74c3c; /* Red for negative trend */
+        }
+
+        .chart-placeholder {
+            background-color: #f0f0f0;
+            height: 200px;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-style: italic;
+            font-size: 0.9em;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-placeholder.pie-chart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        .pie-slice {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: var(--accent-blue); /* Base color for simulation */
+            position: relative;
+            box-shadow: inset 0 0 0 5px rgba(255,255,255,0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 0.9em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .pie-slice span {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.7em;
+            font-weight: normal;
+        }
+
+        /* Simulating different slices by applying different background colors as an overlay/mask concept for wireframe */
+        .pie-slice:nth-child(1) { background: conic-gradient(var(--accent-green) 0% 40%, var(--accent-blue) 40% 100%); }
+        .pie-slice:nth-child(2) { background: conic-gradient(var(--accent-orange) 0% 25%, var(--accent-blue) 25% 100%); }
+
+
+        .table-section table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .table-section th, .table-section td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table-section th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+            color: var(--header-bg);
+            cursor: pointer;
+        }
+
+        .table-section th:hover {
+            background-color: #e8e8e8;
+        }
+
+        .table-section tr:nth-child(even) {
+            background-color: #fdfdfd;
+        }
+
+        .full-width {
+            grid-column: 1 / -1; /* Spans across all columns */
+        }
+
+        .live-indicator {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent-green);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .live-indicator::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite ease-out;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        .filter-section {
+            grid-column: 1 / -1;
+            padding: var(--card-padding);
+            background-color: var(--secondary-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: var(--card-margin); /* Adjusted for layout */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .filter-section label {
+            font-weight: bold;
+            margin-right: 5px;
+            white-space: nowrap;
+        }
+
+        .filter-section input[type="date"],
+        .filter-section select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 0.9em;
+            flex-grow: 1;
+            max-width: 200px;
+        }
+
+        .filter-section button {
+            background-color: var(--accent-blue);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-section button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .dashboard-container {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                margin-top: 15px;
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+            }
+
+            nav a {
+                flex-grow: 1;
+                text-align: center;
+            }
+
+            .dashboard-container {
+                padding: 15px;
+                margin: 15px;
+                grid-template-columns: 1fr; /* Stack all cards on small screens */
+            }
+
+            .filter-section {
+                justify-content: center;
+            }
+
+            .filter-section input[type="date"],
+            .filter-section select {
+                max-width: none;
+                width: 100%;
+            }
+
+            .table-section table,
+            .table-section thead,
+            .table-section tbody,
+            .table-section th,
+            .table-section td,
+            .table-section tr {
+                display: block;
+            }
+
+            .table-section thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            .table-section tr {
+                border: 1px solid var(--border-color);
+                margin-bottom: 10px;
+                border-radius: var(--border-radius);
+            }
+
+            .table-section td {
+                border: none;
+                border-bottom: 1px solid var(--border-color);
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+
+            .table-section td:before {
+                position: absolute;
+                top: 6px;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+            }
+            .table-section td:nth-of-type(1):before { content: "Inquiry Type"; }
+            .table-section td:nth-of-type(2):before { content: "Frequency"; }
+            .table-section td:nth-of-type(3):before { content: "Resolution Rate"; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Voice Agent Demo</h1>
+        <nav>
+            <a href="hotel.html">Hotel Dashboard</a>
+            <a href="pizza.html" class="active">Pizza Delivery Dashboard</a>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+        <div class="live-indicator">Live</div>
+
+        <div class="filter-section">
+            <label for="date-range">Date Range:</label>
+            <input type="date" id="start-date" value="2023-01-01">
+            <span>to</span>
+            <input type="date" id="end-date" value="2023-01-31">
+            <button>Apply Filter</button>
+        </div>
+
+        <div class="card kpi-card">
+            <h3>Order Placement Success Rate</h3>
+            <div class="kpi-value">
+                98.2% <span class="kpi-trend">▲ 0.5%</span>
+            </div>
+            <p>Orders completed via voice agent</p>
+        </div>
+
+        <div class="card kpi-card">
+            <h3>Average Order Value</h3>
+            <div class="kpi-value">
+                $28.50 <span class="kpi-trend">▲ $1.20</span>
+            </div>
+            <p>Per voice agent order</p>
+        </div>
+
+        <div class="card kpi-card">
+            <h3>Peak Ordering Times</h3>
+            <div class="kpi-value" style="font-size: 1.8em;">
+                6:00 PM - 8:00 PM
+            </div>
+            <p>Busiest hours for voice orders</p>
+        </div>
+
+        <div class="card full-width">
+            <h3>Most Popular Menu Items (Voice Orders)</h3>
+            <div class="chart-placeholder pie-chart">
+                <div class="pie-slice" style="background-color: var(--accent-green);">
+                    Pepperoni Pizza<br><span>40%</span>
+                </div>
+                <div class="pie-slice" style="background-color: var(--accent-orange);">
+                    Cheese Pizza<br><span>25%</span>
+                </div>
+                <div class="pie-slice" style="background-color: var(--accent-blue);">
+                    Soft Drinks<br><span>15%</span>
+                </div>
+                <div class="pie-slice" style="background-color: #8e44ad;">
+                    Garlic Knots<br><span>10%</span>
+                </div>
+                <div class="pie-slice" style="background-color: #e74c3c;">
+                    Specialty Pizza<br><span>10%</span>
+                </div>
+            </div>
+            <p style="font-size: 0.8em; text-align: right; margin-top: 10px;">*Hover for precise data in full build</p>
+        </div>
+
+        <div class="card full-width table-section">
+            <h3>Common Customer Inquiries (CRM Preview)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th data-sort="inquiry">Inquiry Type</th>
+                        <th data-sort="frequency">Frequency</th>
+                        <th data-sort="resolution">Resolution Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Delivery Status</td>
+                        <td>450</td>
+                        <td>99%</td>
+                    </tr>
+                    <tr>
+                        <td>Menu Questions</td>
+                        <td>320</td>
+                        <td>95%</td>
+                    </tr>
+                    <tr>
+                        <td>Special Requests</td>
+                        <td>180</td>
+                        <td>90%</td>
+                    </tr>
+                    <tr>
+                        <td>Order Modifications</td>
+                        <td>110</td>
+                        <td>88%</td>
+                    </tr>
+                    <tr>
+                        <td>Payment Issues</td>
+                        <td>60</td>
+                        <td>75%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size: 0.8em; margin-top: 10px;">*Click column headers to sort in a full build</p>
+        </div>
+
+    </main>
+
+    <script>
+        // Set active navigation link
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === 'pizza.html') {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+```
